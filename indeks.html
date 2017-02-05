@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<script src="scripts/angular.min.js"></script>
+<script src="scripts/angular-route.js"></script>
+<script src="scripts/angular-ui-router.js"></script>
+<script src="scripts/angular-animate.min.js"></script>
+<script src="myScripts/ngDialog/ngDialog.min.js"></script>
+
+<!--<script src="scripts/bootstrap/bootstrap.min.js"></script>-->
+<script src="myScripts/quiz.js"></script>
+<script src="myScripts/logowanie.js"></script>
+<script src="myScripts/kategorie.js"></script>
+<script src="myScripts/pytania.js"></script>
+<script src="myScripts/uzytkownicy.js"></script>
+
+<link rel="stylesheet" href="css/bootstrap/bootstrap.min.css" />
+<link rel="stylesheet" href="css/ngDialog/ngDialog-theme-default.min.css"/>
+<link rel="stylesheet" href="css/ngDialog/ngDialog.min.css"/>
+
+<link rel="stylesheet" href="css/style.css" />
+<body ng-app="quizApp">
+<header class=" myheader">
+    <div class="row myheadercontent">
+        <div class="col-md-4">
+            <h1>Quiz</h1>
+            <div class="subtitle">Zarządzanie bazą danych quizu</div>
+        </div>
+    </div>
+</header>
+
+<ul class="nav nav-pills nav-justified ">
+    <li><a href="#!uzytkownicy">Użytkownicy</a></li>
+    <li><a href="#!pytania">Pytania</a></li>
+    <li><a href="#!kategorie">Kategorie</a></li>
+</ul>
+<div class="container">
+    <div ng-view></div>
+</div>
+
+</body>
+</html>

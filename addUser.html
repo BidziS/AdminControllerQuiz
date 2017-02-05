@@ -1,0 +1,14 @@
+<form>
+    <div class="dialogCenter form-group">
+        <label>Nick:</label>
+        <input class="dialogItems" type="text" ng-model="newUser.nick" />
+        <br />
+        <label>Hasło:</label>
+        <input class="dialogItems" ng-model="newUser.haslo" type="password" />
+    </div>
+    <div class="dialogFooter">
+        <button ng-click="closeThisDialog()">Anuluj</button>
+        <button ng-click="saveUser(newUser)">OK</button>
+    </div>
+
+</form>

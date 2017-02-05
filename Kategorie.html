@@ -1,0 +1,15 @@
+<div class="logout"><button class="btn btn-default" ng-click="logout()">Wyloguj</button></div>
+<div class="mytable"><table class="table">
+
+    <thead>
+    <tr >
+        <th>Nazwa</th>
+    </tr>
+    </thead>
+    <tr ng-repeat="kategoria in kategorie">
+        <td>{{kategoria.nazwa}}</td>
+        <td class="el"><button ng-click="edytujKategorie(kategoria)">Edytuj</button><button ng-click="usunKategorie(kategoria)">Usuń</button></td>
+    </tr>
+</table>
+    <button ng-click="dodajKategorie()">Dodaj użytkownika</button>
+</div>

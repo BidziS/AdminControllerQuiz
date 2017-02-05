@@ -1,0 +1,10 @@
+<form>
+    <div class="form-group">
+        <label>Odpowiedz:</label>
+            <input class="dodajOdpowiedz" ng-model="odpowiedz.odpowiedz" type="text" /><radio></radio><input type="checkbox" ng-model="odpowiedz.poprawna">
+    </div>
+    <div class="dialogFooter">
+        <button ng-click="closeThisDialog()">Anuluj</button>
+        <button ng-click="zapiszZEdytowanaOdpowiedz(odpowiedz)">OK</button>
+    </div>
+</form>

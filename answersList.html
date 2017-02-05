@@ -1,0 +1,14 @@
+<div style="width: 100%">{{pytanie.pytanie}}</div>
+<table class="table">
+    <thead>
+    <tr >
+        <th style="width: 75%">Odpowiedzi</th>
+        <th>Poprawna</th>
+    </tr>
+    </thead>
+    <tr ng-repeat="odpowiedz in odpowiedzi">
+        <td>{{odpowiedz.odpowiedz}}</td>
+        <td>{{odpowiedz.poprawna}}</td>
+        <td class="el"><button ng-click="edytujOdpowiedz(odpowiedz)">Edytuj</button><button ng-click="usunOdpowiedz(odpowiedz)">Usuń</button></td>
+    </tr>
+</table>

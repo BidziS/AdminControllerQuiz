@@ -1,0 +1,15 @@
+<div class="logout"><button class="btn btn-default" ng-click="logout()">Wyloguj</button></div>
+<div class="mytable"><table class="table">
+
+    <thead>
+    <tr >
+        <th>Nick</th>
+    </tr>
+    </thead>
+    <tr ng-repeat="user in users">
+        <td>{{user.nick}}</td>
+        <td class="el"><button>Edytuj</button><button ng-click="deleteUser(user.nick)">Usuń</button></td>
+    </tr>
+</table>
+<button ng-click="openModal()">Dodaj użytkownika</button>
+</div>

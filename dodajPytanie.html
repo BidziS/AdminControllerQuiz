@@ -1,0 +1,19 @@
+<form>
+    <div class="form-group">
+        <label>Pytanie</label>
+        <input class="dodajPytanieInput" type="text" ng-model="pytanie.pytanie" />
+        <br />
+        <label>Odpowiedzi:</label>
+        <radiogroup>
+        <input class="dodajOdpowiedz" ng-model="odpOne.odpowiedz" type="text" /><radio></radio><input type="checkbox" ng-model="one.value" ng-value="one.value" ng-click="checkRadio(one.name)">
+        <input class="dodajOdpowiedz" ng-model="odpTwo.odpowiedz" type="text" /><input type="checkbox" ng-model="two.value" ng-click="checkRadio(two.name)">
+        <input class="dodajOdpowiedz" ng-model="odpTree.odpowiedz" type="text" /><input type="checkbox" ng-model="tree.value" ng-click="checkRadio(tree.name)">
+        <input class="dodajOdpowiedz" ng-model="odpFour.odpowiedz" type="text" /><input type="checkbox" ng-model="four.value" ng-click="checkRadio(four.name)">
+        </radiogroup>
+    </div>
+    <div class="dialogFooter">
+        <button ng-click="closeThisDialog()">Anuluj</button>
+        <button ng-click="aaa(pytanie)">OK</button>
+    </div>
+
+</form>

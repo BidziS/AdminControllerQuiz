@@ -1,0 +1,215 @@
+.same-class {
+    background: grey;
+}
+.active {
+    background: blue;
+}
+.myheader {
+    border-bottom: solid 1px #000000;
+    padding-bottom: 1%;
+}
+.myheadercontent {
+    margin-left: 2%;
+    margin-right: 2%;
+}
+.subtitle {
+    font-size: 16px;
+    color: grey;
+}
+.loader {
+    border: 16px solid #f3f3f3; /* Light grey */
+    border-top: 16px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    /* bring your own prefixes */
+    transform: translate(-50%, -50%);
+    animation: spin 0.5s linear infinite;
+
+}
+.loaderBack {
+
+}
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+.sample-show-hide {
+    transition: all linear 0.5s;
+}
+.sample-show-hide.ng-hide {
+    opacity: 0;
+}
+.alert {
+    display: inline;
+    text-align: center;
+}
+.dialogHeader {
+    border-bottom: solid 1px #000000;
+}
+.dialogCenter {
+    text-align: right;
+    padding-top: 10%;
+    padding-right: 20%;
+    margin-left: auto;
+    margin-right: auto;
+}
+.dialogItems {
+    width: 55%;
+    margin-bottom: 5%;
+}
+.dialogSelect {
+    width: 55%;
+}
+.dialogFooter {
+    border-top: solid 1px #000000;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: right;
+}
+.seacher {
+    display: inline;
+    text-align: center;
+    padding-top: 2%;
+    font-family: arial;
+    font-size: 16px;
+    font-weight: bold;
+}
+.searchinputstyle {
+
+    width: 50%;
+}
+.shoppingcarttitle {
+    font-family: arial;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.shoppingCart {
+    color:black;
+    border: solid 1px #000000;
+    width: 50%;
+    height: 20%;
+    padding: 3%;
+    padding-right: 25%;
+    cursor: pointer;
+
+
+
+}
+.shopList {
+    display: inline;
+    text-align: right;
+    padding-top: 2%;
+}
+.validateWarnings {
+    font: 12px solid red;
+
+}
+/*.nav>li>a*/
+/*{*/
+    /*border: solid 1px #000000;*/
+    /*border-bottom: 0px;*/
+    /*border-top-left-radius: 20px;*/
+    /*border-top-right-radius: 20px;*/
+    /*color: black;*/
+    /*cursor: pointer;*/
+/*}*/
+.table,
+.table>thead>tr>th
+{
+    border: 1px solid black;
+}
+
+.table>tbody>tr>td {
+    border: 1px solid black;
+    border-top: none;
+    border-bottom: none;
+}
+header {
+    padding: 0px;
+    margin: 0px;
+
+}
+body{
+    height: 100%;
+}
+.bookscatalog {
+    font: 32px  black;
+    font-family: arial;
+    margin-left: 15%;
+    margin-top: 1%;
+    margin-bottom: 1%
+
+
+}
+.container {
+
+}
+.addToCart {
+    color: black;
+    cursor: pointer;
+}
+.buttonCenter {
+    margin: 0 auto;
+}
+.mytable {
+    margin-left: 35%;
+    margin-right: 35%;
+}
+.el{
+    width: 40%;
+}
+.mytablekategorie{
+    margin-left: 20%;
+    margin-right: 20%;
+}
+.pytania{
+    height: 100%;
+}
+.dodajPytanieInput{
+    width: 100%;
+    text-align: left;
+    padding-left: 0;
+    padding-top: 0;
+}
+.dodajOdpowiedz{
+    width: 95%;
+    margin-bottom: 3%;
+}
+.checkBox{
+    margin-left: 2%;
+    padding-left: 2%;
+}
+.logout{
+    text-align: right;
+    float: right;
+}
+.loginForm {
+    margin: auto;
+    width: 500px;
+    padding: 10px;
+    border: 1px solid black;
+    height: 300px;
+
+}
+.loginFormText{
+    width: 65%;
+    padding: 10px;
+    margin: 7% auto auto;
+}
+.loginFormButton{
+    width: 65%;
+    padding: 10px;
+    margin: auto;
+}
+.loginforminput{
+    width: 300px;
+    height: 30px;
+}
+.loginformbuttonpro{
+    width: 300px;
+}

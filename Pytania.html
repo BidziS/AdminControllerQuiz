@@ -1,0 +1,21 @@
+<div class="logout"><button class="btn btn-default" ng-click="logout()">Wyloguj</button></div>
+<table class="table table-bordered">
+    <tr >
+        <th ng-repeat="kategory in kategories"><a ng-click="kategorie(kategory)">{{kategory.nazwa}}</a></th>
+    </tr>
+</table>
+<div class="mytablekategorie">
+    <table class="table">
+
+    <thead>
+    <tr >
+        <th>Pytanie</th>
+    </tr>
+    </thead>
+    <tr ng-repeat="pytanie in pytania">
+        <td>{{pytanie.pytanie}}</td>
+        <td class="el"><button ng-click="edytujPytanie(pytanie)">Edytuj</button><button ng-click="usunPytanie(pytanie)">Usuń</button><button ng-click="openModal(pytanie)">Pokaż odpowiedzi</button></td>
+    </tr>
+</table>
+    <button ng-click="dodajPytanie()">Dodaj pytanie</button>
+</div>
