@@ -23,7 +23,7 @@ quizApp.controller("kategorieController",
             });
         $scope.dodajKategorie = function () {
             ngDialog.open({
-                template: '<form> <div class="dialogCenter form-group"> <label>Nazwa:</label> <input class="dialogItems" type="text" ng-model="nowaKategoria.nazwa" /> </div> <div class="dialogFooter"> <button ng-click="closeThisDialog()">Anuluj</button> <button ng-click="zapiszKategorie(nowaKategoria)">OK</button> </div> </form>',
+                template: '<form name="dodajKategorie"> <div class="dialogCenter form-group"> <label>Nazwa:</label> <input class="dialogItems" type="text" ng-model="nowaKategoria.nazwa" name="kategoria" title="Pole nie może być puste" pattern=".{1,}" required/> </div> <div class="dialogFooter"> <button ng-click="closeThisDialog()">Anuluj</button><input type="submit" ng-disabled="dodajKategorie.kategoria.$invalid" ng-click="zapiszKategorie(nowaKategoria)" value="OK"></div> </form>',
                 //height: '45%',
                 className: 'ngdialog-theme-default',
                 controller: 'dodajKategorieCtr',
@@ -33,7 +33,7 @@ quizApp.controller("kategorieController",
         $scope.usunKategorie = function (kategoria) {
             quizService.setKategorieObj(kategoria);
             ngDialog.open({
-                template: '<div class="alert"><div>Czy napewno chcesz usunąć użytkownika?<div><button ng-click="closeAll()">Nie</button><button ng-click="usunTaKategorie(kategoria)">Tak</button></div>',
+                template: '<div class="alert"><div>Czy napewno chcesz usunąć kategorie?<div><button ng-click="anuluj()">Nie</button><button ng-click="usunTaKategorie(kategoria)">Tak</button></div>',
                 className: 'ngdialog-theme-default',
                 controller: 'usunKategorieCrt',
                 plain: true
@@ -44,7 +44,7 @@ quizApp.controller("kategorieController",
             quizService.setKategorieObj(kategoria);
             $scope.elo = quizService.getKategoriaObj();
             ngDialog.open({
-                template: '<form> <div class="dialogCenter form-group"> <label>Nazwa:</label> <input class="dialogItems" type="text" ng-model="kategoria.nazwa" /> </div> <div class="dialogFooter"> <button ng-click="closeThisDialog()">Anuluj</button> <button ng-click="zapiszKategorie(kategoria)">OK</button> </div> </form>',
+                template: '<form name="dodajKategorie"> <div class="dialogCenter form-group"> <label>Nazwa:</label> <input class="dialogItems" type="text" ng-model="nowaKategoria.nazwa" name="kategoria" title="Pole nie może być puste" pattern=".{1,}" required/> </div> <div class="dialogFooter"> <button ng-click="closeThisDialog()">Anuluj</button><input type="submit" ng-disabled="dodajKategorie.kategoria.$invalid" ng-click="zapiszKategorie(nowaKategoria)" value="OK"></div> </form>',
                 //height: '45%',
                 className: 'ngdialog-theme-default',
                 controller: 'edytujKategorieCtr',
@@ -83,6 +83,10 @@ quizApp.controller("dodajKategorieCtr",
             ).finally(function () {
             })
         }
+        $scope.anuluj = function () {
+            ngDialog.close();
+            $route.reload();
+        }
     });
 quizApp.controller("usunKategorieCrt",
     function ($scope, $http, ngDialog, quizService,tokenService,CONST){
@@ -97,7 +101,7 @@ quizApp.controller("usunKategorieCrt",
                 }
             }).then(function(){
                     ngDialog.open({
-                        template: '<div class="alert"><div>Utworzono użytkownika<div><button ng-click="closeAll()">Zamknij</button></div>',
+                        template: '<div class="alert"><div>Usunięto kategorie<div><button ng-click="closeAll()">Zamknij</button></div>',
                         className: 'ngdialog-theme-default',
                         controller: 'alertCtr',
                         plain: true
@@ -110,6 +114,10 @@ quizApp.controller("usunKategorieCrt",
             ).finally(function () {
             });
         }
+        $scope.anuluj = function () {
+            ngDialog.close();
+            $route.reload();
+        }
 
     });
 quizApp.controller("edytujKategorieCtr",
@@ -118,7 +126,7 @@ quizApp.controller("edytujKategorieCtr",
         $scope.zapiszKategorie = function (nowaKategoria) {
             console.log($scope.newUser);
             $http({
-                url : CONST.url+'/quizAndroid/kategorie/zapiszKategorie',
+                url : CONST.url+'/kategorie/zapiszKategorie',
                 method : 'POST',
                 headers: {
                     'Content-Type' : 'application/json',
@@ -127,7 +135,7 @@ quizApp.controller("edytujKategorieCtr",
                 data : nowaKategoria
             }).then(function(){
                     ngDialog.open({
-                        template: '<div class="alert"><div>Utworzono kategorie<div><button ng-click="closeAll()">Zamknij</button></div>',
+                        template: '<div class="alert"><div>Edycja powiodła się<div><button ng-click="closeAll()">Zamknij</button></div>',
                         className: 'ngdialog-theme-default',
                         controller: 'alertCtr',
                         plain: true

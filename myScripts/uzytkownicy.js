@@ -32,8 +32,9 @@ quizApp.controller("uzytkownicyController",
                 controller: 'addUserController'
             });
         };
-        $scope.deleteUser = function (nick) {
-            quizService.setUserNick(nick);
+        $scope.deleteUser = function (user) {
+            quizService.setUserNick(user.nick);
+            quizService.setUser(user);
             ngDialog.open({
                 template: '<div class="alert"><div>Czy napewno chcesz usunąć użytkownika?<div><button ng-click="closeAll()">Nie</button><button ng-click="deleteThisUser()">Tak</button></div>',
                 className: 'ngdialog-theme-default',
@@ -99,9 +100,9 @@ quizApp.controller("alertCtr",
 quizApp.controller("deleteCtr",
     function ($scope, ngDialog,$route, $http,quizService,tokenService,CONST) {
         $scope.deleteThisUser = function () {
-            var nickName = quizService.getUserNick();
+            var userId = quizService.getUser().id;
             $http({
-                url : CONST.url+'/uzytkownicy/usunPoNicku/'+nickName,
+                url : CONST.url+'/uzytkownicy//usunPoId/'+userId,
                 method : 'POST',
                 headers: {'Content-Type' : 'application/json',
                           'Authorization': 'Basic '+ tokenService.getToken()}

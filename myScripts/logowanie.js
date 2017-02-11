@@ -15,19 +15,23 @@ quizApp.controller("logowanieController",
             //var encodedString = btoa(zmienna);
             tokenService.setToken(zmienna);
             $http({
-                url : 'http://192.168.56.1:8080/quizAndroid/uzytkownicy/uzytkownikLogowanie',
-                method : 'POST',
+                url : 'http://192.168.56.1:8080/quizAndroid/uzytkownicy/logowanieAdmin',
+                method : 'GET',
                 headers: {
                     'Authorization' : 'Basic '+ tokenService.getToken()
                 },
                 data : logowanieJson
             }).then(function(response){
-                    $scope.data = response;
+                //$scope.data = response;
                 tokenService.setLogged(true);
                 $location.path('/uzytkownicy')
-
+9
                 },function errorCallback(response){
-                    alert("Istnieje użytkownik o takim nicku");
+                    // if(response.status == 404){
+                    //     tokenService.setLogged(true);
+                    //     $location.path('/uzytkownicy')
+                    // }
+                    alert("Niepoprawne dane logowanie");
                 }
             ).finally(function () {
             })

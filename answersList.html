@@ -9,6 +9,7 @@
     <tr ng-repeat="odpowiedz in odpowiedzi">
         <td>{{odpowiedz.odpowiedz}}</td>
         <td>{{odpowiedz.poprawna}}</td>
-        <td class="el"><button ng-click="edytujOdpowiedz(odpowiedz)">Edytuj</button><button ng-click="usunOdpowiedz(odpowiedz)">Usuń</button></td>
+        <td class="el"><button ng-click="edytujOdpowiedz(odpowiedz,odpowiedzi)">Edytuj</button><button ng-click="usunOdpowiedz(odpowiedz)">Usuń</button></td>
     </tr>
 </table>
+<button ng-click="dodajOdpowiedz(odpowiedzi)">Dodaj odpowiedź</button>

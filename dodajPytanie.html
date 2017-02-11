@@ -1,19 +1,20 @@
-<form>
+<form name="dodajPytanieForm">
     <div class="form-group">
         <label>Pytanie</label>
-        <input class="dodajPytanieInput" type="text" ng-model="pytanie.pytanie" />
+        <input class="dodajPytanieInput" type="text" ng-model="pytanie.pytanie" name="pytanie" title="Pole nie może być puste" pattern=".{1,}" required/>
         <br />
         <label>Odpowiedzi:</label>
         <radiogroup>
-        <input class="dodajOdpowiedz" ng-model="odpOne.odpowiedz" type="text" /><radio></radio><input type="checkbox" ng-model="one.value" ng-value="one.value" ng-click="checkRadio(one.name)">
-        <input class="dodajOdpowiedz" ng-model="odpTwo.odpowiedz" type="text" /><input type="checkbox" ng-model="two.value" ng-click="checkRadio(two.name)">
-        <input class="dodajOdpowiedz" ng-model="odpTree.odpowiedz" type="text" /><input type="checkbox" ng-model="tree.value" ng-click="checkRadio(tree.name)">
-        <input class="dodajOdpowiedz" ng-model="odpFour.odpowiedz" type="text" /><input type="checkbox" ng-model="four.value" ng-click="checkRadio(four.name)">
+        <input class="dodajOdpowiedz" ng-model="odpOne.odpowiedz" type="text" name="odpowiedz1" title="Pole nie może być puste" pattern=".{1,}" required/><input type="checkbox" ng-model="one.value" ng-value="one.value" ng-click="checkRadio(one.name)">
+        <input class="dodajOdpowiedz" ng-model="odpTwo.odpowiedz" type="text" name="odpowiedz2" title="Pole nie może być puste" pattern=".{1,}" required/><input type="checkbox" ng-model="two.value" ng-click="checkRadio(two.name)">
+        <input class="dodajOdpowiedz" ng-model="odpTree.odpowiedz" type="text" name="odpowiedz3" title="Pole nie może być puste" pattern=".{1,}" required/><input type="checkbox" ng-model="tree.value" ng-click="checkRadio(tree.name)">
+        <input class="dodajOdpowiedz" ng-model="odpFour.odpowiedz" type="text" name="odpowiedz4" title="Pole nie może być puste" pattern=".{1,}" required/><input type="checkbox" ng-model="four.value" ng-click="checkRadio(four.name)">
         </radiogroup>
     </div>
     <div class="dialogFooter">
-        <button ng-click="closeThisDialog()">Anuluj</button>
-        <button ng-click="aaa(pytanie)">OK</button>
+        <button ng-click="anuluj()">Anuluj</button>
+        <!--<button ng-click="aaa(pytanie)" >OK</button>-->
+        <input type="submit" ng-disabled="dodajPytanieForm.pytanie.$invalid || dodajPytanieForm.odpowiedz1.$invalid || dodajPytanieForm.odpowiedz2.$invalid || dodajPytanieForm.odpowiedz3.$invalid || dodajPytanieForm.odpowiedz4.$invalid" ng-click="aaa(pytanie)" value="OK">
     </div>
 
 </form>

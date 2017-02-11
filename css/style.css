@@ -213,3 +213,18 @@ body{
 .loginformbuttonpro{
     width: 300px;
 }
+
+.naglowekKategorie
+{
+    font-weight:normal;
+    text-decoration:underline overline;
+    font-style:italic;
+    color:#000000;
+    letter-spacing:4pt;
+    word-spacing:2pt;
+    font-size:38px;
+    text-align:center;
+    font-family:impact, sans-serif;
+    line-height:1;
+    padding-left: 8%;
+}

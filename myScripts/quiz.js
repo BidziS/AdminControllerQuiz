@@ -34,6 +34,8 @@ quizApp.service('quizService',
         var kategoria = "";
         var odpowiedz = {};
         var kategoriaObj = {};
+        var user = {};
+        var odpowiedzi = [];
         return {
             getUserNick: function () {
                 return userNick;
@@ -64,6 +66,18 @@ quizApp.service('quizService',
             },
             setKategorieObj: function (value) {
                 kategoriaObj = value;
+            },
+            getUser: function () {
+                return user;
+            },
+            setUser: function (value) {
+                user = value;
+            },
+            getOdpowiedzi: function () {
+                return odpowiedzi;
+            },
+            setOdpowiedzi: function (value) {
+                odpowiedzi = value;
             }
 
         };
@@ -90,6 +104,11 @@ quizApp.config(function($routeProvider,$qProvider) {
         .when("/pytania", {
             templateUrl : "Pytania.html",
             controller: "pytaniaController"
+        })
+        .when("/wybKategorie", {
+            templateUrl : "wybierzKategorie.html",
+            controller:"wybierzKategorieCrt",
+            controllerAs:'wybKategorie'
         })
         .when("/kategorie", {
             templateUrl : "Kategorie.html",

@@ -1,9 +1,9 @@
 <div class="logout"><button class="btn btn-default" ng-click="logout()">Wyloguj</button></div>
-<table class="table table-bordered">
-    <tr >
-        <th ng-repeat="kategory in kategories"><a ng-click="kategorie(kategory)">{{kategory.nazwa}}</a></th>
-    </tr>
-</table>
+<!--<table class="table table-bordered table-striped">-->
+    <!--<tr>-->
+        <!--<th ng-repeat="kategory in kategories"><a ng-click="kategorie(kategory)">{{kategory.nazwa}}</a></th>-->
+    <!--</tr>-->
+<!--</table>-->
 <div class="mytablekategorie">
     <table class="table">
 
@@ -18,4 +18,5 @@
     </tr>
 </table>
     <button ng-click="dodajPytanie()">Dodaj pytanie</button>
+    <ul class="nav nav-pills nav-justified table-bordered"><li><a href="#!wybKategorie">Wróć do wyboru kategorii</a></li> </ul>
 </div>

@@ -1,14 +1,15 @@
-<form>
+<form name="dodajUzytkownika" novalidate>
     <div class="dialogCenter form-group">
         <label>Nick:</label>
-        <input class="dialogItems" type="text" ng-model="newUser.nick" />
+        <input class="dialogItems" type="text" ng-model="newUser.nick" name="nick" pattern="[A-Za-z0-9]{3,12}" title="Nick powinien posiadać conajmniej 3 znaki, a conajwyżej 12." required/>
         <br />
         <label>Hasło:</label>
-        <input class="dialogItems" ng-model="newUser.haslo" type="password" />
+        <input class="dialogItems" ng-model="newUser.haslo" type="password" pattern="(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\S+$).{6,}" title="Hasło musi posiadać conajmniej: jedną małą literę, jedną dużą oraz jedną liczbę. Hasło nie może byc krótsze niż 6 znaków " name="haslo" required/>
     </div>
     <div class="dialogFooter">
         <button ng-click="closeThisDialog()">Anuluj</button>
-        <button ng-click="saveUser(newUser)">OK</button>
+        <!--<button ng-click="saveUser(newUser)" type="submit">OK</button>-->
+        <input type="submit" ng-disabled="dodajUzytkownika.haslo.$invalid || dodajUzytkownika.nick.$invalid" ng-click="saveUser(newUser)" value="OK">
     </div>
 
 </form>

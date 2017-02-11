@@ -1,0 +1,14 @@
+<div class="logout"><button class="btn btn-default" ng-click="logout()">Wyloguj</button></div>
+
+<br>
+    <div class="naglowekKategorie">Wybierz  kategorie</div>
+<br>
+<div class="mytable">
+
+
+    <table class="table table-bordered">
+        <tr ng-repeat="kategory in kategories">
+            <th><a href="#!pytania" ng-click="wybierzKategorie(kategory)">{{kategory.nazwa}}</a></th>
+        </tr>
+    </table>
+</div>

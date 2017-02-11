@@ -1,10 +1,10 @@
-<form>
+<form name="edytujOdpowiedzi">
     <div class="form-group">
         <label>Odpowiedz:</label>
-            <input class="dodajOdpowiedz" ng-model="odpowiedz.odpowiedz" type="text" /><radio></radio><input type="checkbox" ng-model="odpowiedz.poprawna">
+            <input class="dodajOdpowiedz" ng-model="odpowiedz.odpowiedz" type="text" name="odpowiedz" title="Pole nie może być puste" pattern=".{1,}" required/><radio></radio><input type="checkbox" ng-model="odpowiedz.poprawna">
     </div>
     <div class="dialogFooter">
-        <button ng-click="closeThisDialog()">Anuluj</button>
-        <button ng-click="zapiszZEdytowanaOdpowiedz(odpowiedz)">OK</button>
+        <button ng-click="anuluj()">Anuluj</button>
+        <input type="submit" ng-disabled="edytujOdpowiedzi.odpowiedz.$invalid" ng-click="zapiszZEdytowanaOdpowiedz(odpowiedz,odpowiedzi)" value="OK">
     </div>
 </form>

@@ -8,7 +8,7 @@
     </thead>
     <tr ng-repeat="user in users">
         <td>{{user.nick}}</td>
-        <td class="el"><button>Edytuj</button><button ng-click="deleteUser(user.nick)">Usuń</button></td>
+        <td class="el"><button ng-click="deleteUser(user)">Usuń</button></td>
     </tr>
 </table>
 <button ng-click="openModal()">Dodaj użytkownika</button>

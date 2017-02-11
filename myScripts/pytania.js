@@ -9,11 +9,12 @@ quizApp.controller("pytaniaController",
             tokenService.setLogged(false);
             loggedService.isLog();
         };
-        $scope.kategorie = function (aKategoria) {
-            quizService.setKategorie(aKategoria);
+        $scope.kategoria = quizService.getKategorie();
+        // $scope.kategorie = function (aKategoria) {
+        //     quizService.setKategorie(aKategoria);
             $http({
                 method: 'GET',
-                url: CONST.url+'/pytania/pobierzPoNazwieKategorii/'+aKategoria.nazwa,
+                url: CONST.url+'/pytania/pobierzPoNazwieKategorii/'+quizService.getKategorie().nazwa,
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': 'Basic '+ tokenService.getToken()
@@ -36,7 +37,7 @@ quizApp.controller("pytaniaController",
             $scope.usunPytanie = function (pytanie) {
                 quizService.setPytanie(pytanie);
                 ngDialog.open({
-                    template: '<div class="alert"><div>Czy napewno chcesz usunąć użytkownika?<div><button>Nie</button><button ng-click="usunTePytanie(pytanie)">Tak</button></div>',
+                    template: '<div class="alert"><div>Czy napewno chcesz usunąć pytanie?<div><button>Nie</button><button ng-click="usunTePytanie(pytanie)">Tak</button></div>',
                     className: 'ngdialog-theme-default',
                     controller: 'usunPytanieCtr',
                     plain: true
@@ -46,7 +47,7 @@ quizApp.controller("pytaniaController",
             $scope.edytujPytanie = function (pytanie) {
                 quizService.setPytanie(pytanie);
                 ngDialog.open({
-                    template: '<form> <div class="form-group"> <label>Pytanie:</label> <input class="dodajOdpowiedz" ng-model="pytanie.pytanie" type="text" /></div> <div class="dialogFooter"> <button ng-click="closeThisDialog()">Anuluj</button> <button ng-click="zapiszZEdytowanePytanie(pytanie)">OK</button> </div></form>',
+                    template: '<form name="edytujPytanie"> <div class="form-group"> <label>Pytanie:</label> <input class="dodajOdpowiedz" ng-model="pytanie.pytanie" type="text" name="pytanie" title="Pole nie może być puste" pattern=".{1,}" required/></div> <div class="dialogFooter"> <button ng-click="anuluj()">Anuluj</button> <input type="submit" ng-disabled="edytujPytanie.pytanie.$invalid" ng-click="zapiszZEdytowanePytanie(pytanie)" value="OK"> </div></form>',
                     className: 'ngdialog-theme-default',
                     controller: 'edytujPytanieCtr',
                     plain: true
@@ -58,26 +59,26 @@ quizApp.controller("pytaniaController",
                     className: 'ngdialog-theme-default',
                     controller: 'dodajPytanieCtr'
                 });
-            }
-        };
-        $http({
-            method: 'GET',
-            url: CONST.url+'/kategorie/pobierzWszystkie',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Basic '+ tokenService.getToken()
-            },
-            cache : false
-        }).then(function (response) {
-            $scope.kategories = response.data;
-        })
-            .finally(function () {
-            });
+            };
+        // };
+        // $http({
+        //     method: 'GET',
+        //     url: CONST.url+'/kategorie/pobierzWszystkie',
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //         'Authorization': 'Basic '+ tokenService.getToken()
+        //     },
+        //     cache : false
+        // }).then(function (response) {
+        //     $scope.kategories = response.data;
+        // })
+        //     .finally(function () {
+        //     });
 
     });
 
 quizApp.controller("dodajPytanieCtr",
-    function ($rootScope,$scope, $http,quizService,ngDialog,tokenService,CONST){
+    function ($rootScope,$scope, $http,quizService,ngDialog,tokenService,CONST,$route){
         $scope.one = {name:"one",value: true};
         $scope.two = {name:"two",value: false};
         $scope.tree = {name:"tree",value: false};
@@ -127,6 +128,7 @@ quizApp.controller("dodajPytanieCtr",
         };
 
         $scope.pytanie = {pytanie: "", kategorieID: quizService.getKategorie().id}
+
         $scope.zrob = function (aaa) {
             $scope.pytanie2 = 0;
         }
@@ -157,7 +159,7 @@ quizApp.controller("dodajPytanieCtr",
                     zapiszOdpowiedz1();
                 },function errorCallback(response){
                     if(response.status == '405'){
-                        alert("Istnieje użytkownik o takim nicku");
+                        alert("Istnieje taka odpowiedź");
                     }
                 }
             ).finally(function () {
@@ -241,10 +243,15 @@ quizApp.controller("dodajPytanieCtr",
         $scope.aaa = function (bbb) {
             zapiszPytanie(bbb);
         }
+        $scope.anuluj = function () {
+            ngDialog.close();
+            $route.reload();
+        }
     });
 quizApp.controller("edytujPytanieCtr",
-    function ($scope, $http, ngDialog, quizService,tokenService,CONST){
+    function ($scope, $http, ngDialog, quizService,tokenService,CONST,$route){
         $scope.pytanie = quizService.getPytanie();
+        $scope.pytaniePrzedEdycja = quizService.getPytanie();
         $scope.zapiszZEdytowanePytanie = function (pytanieZEdytowane) {
             $http({
                 url : CONST.url+'/pytania/edytujPytanie',
@@ -256,7 +263,7 @@ quizApp.controller("edytujPytanieCtr",
                 data : pytanieZEdytowane
             }).then(function(){
                     ngDialog.open({
-                        template: '<div class="alert"><div>Utworzono użytkownika<div><button ng-click="zamknij()">Zamknij</button></div>',
+                        template: '<div class="alert"><div>Edycja pytania powiodła się<div><button ng-click="zamknij()">Zamknij</button></div>',
                         className: 'ngdialog-theme-default',
                         controller: 'alertCtr',
                         plain: true
@@ -268,6 +275,11 @@ quizApp.controller("edytujPytanieCtr",
                 }
             ).finally(function () {
             })
+        }
+        $scope.anuluj = function () {
+            $scope.pytanie = $scope.pytaniePrzedEdycja;
+            ngDialog.close();
+            $route.reload();
         }
 
 
@@ -279,13 +291,13 @@ quizApp.controller("usunPytanieCtr",
             $http({
                 url : CONST.url+'/pytania/usunPoId/'+pytanie.id,
                 method : 'PUT',
-                header: {
+                headers: {
                     'Content-Type' : 'application/json',
                     'Authorization': 'Basic '+ tokenService.getToken()
                 }
             }).then(function(){
                     ngDialog.open({
-                        template: '<div class="alert"><div>Utworzono użytkownika<div><button ng-click="zamknij()">Zamknij</button></div>',
+                        template: '<div class="alert"><div>Usunięto pytanie<div><button ng-click="zamknij()">Zamknij</button></div>',
                         className: 'ngdialog-theme-default',
                         controller: 'alertCtr',
                         plain: true
@@ -297,41 +309,53 @@ quizApp.controller("usunPytanieCtr",
                 }
             ).finally(function () {
             });
+
         }
 
     });
 /*ANSWERS*/
-quizApp.controller("answersList",
-    function ($scope, $http, ngDialog, quizService){
-        $scope.pytanie = quizService.getPytanie();
-        $http({
-            method: 'GET',
-            url: CONST.url+'/odpowiedzi/pobierzPoPytaniu/'+quizService.getPytanie().id,
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Basic '+ tokenService.getToken()
-            },
-            cache : false
-        }).then(function (response) {
-            $scope.odpowiedzi = response.data;
-        }).finally(function () {
-        });
-        $scope.edytujOdpowiedz = function (odpowiedz) {
-            quizService.setOdpowiedz(odpowiedz);
-            ngDialog.open({
-                template: 'edytujOdpowiedz.html',
-                className: 'ngdialog-theme-default',
-                controller: 'edytujOdpowiedzCtr'
-            });
-        }
+quizApp.controller("dodajOdpowiedz",
+    function ($scope, $http, ngDialog,tokenService,quizService, CONST){
+        $scope.odpowiedz = {
+            id: 0,
+            odpowiedz: "string",
+            poprawna: true,
+            pytania: quizService.getPytanie().id,
+            techDate: "2017-02-11T16:52:27.836Z"
+        };
+        $scope.odpowiedzi = quizService.getOdpowiedzi();
+            $scope.zapiszZEdytowanaOdpowiedz = function (odpowiedzZEdytowana,odpowiedzi) {
+                if(odpowiedzi.length > 3){
+                    alert("Osiągnięto maksymalną ilość odpowiedzi");
+                    return;
+                }
+                if (odpowiedzZEdytowana.poprawna) {
+                    for (var i = 0; i < odpowiedzi.length; i++) {
+                        if (odpowiedzi[i].poprawna) {
 
-    });
-quizApp.controller("edytujOdpowiedzCtr",
-    function ($scope, $http, ngDialog, quizService,tokenService,CONST){
-        $scope.odpowiedz = quizService.getOdpowiedz();
-        $scope.zapiszZEdytowanaOdpowiedz = function (odpowiedzZEdytowana) {
+                            if (odpowiedzi[i].id == odpowiedzZEdytowana.id)
+                                continue;
+                            var odpowiedzDoZmiany = odpowiedzi[i];
+                            odpowiedzDoZmiany.poprawna = false;
+                            $http({
+                                url: CONST.url + '/odpowiedzi/edytujOdpowiedz',
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'Authorization': 'Basic ' + tokenService.getToken()
+                                },
+                                data: odpowiedzDoZmiany
+                            }).then(function () {
+                                }, function errorCallback(response) {
+                                }
+                            ).finally(function () {
+                            })
+                        }
+                    }
+
+            }
             $http({
-                url : CONST.url+'/odpowiedzi/edytujOdpowiedz',
+                url : CONST.url+'/odpowiedzi/zapiszOdpowiedz2',
                 method : 'POST',
                 headers: {
                     'Content-Type' : 'application/json',
@@ -340,7 +364,7 @@ quizApp.controller("edytujOdpowiedzCtr",
                 data : odpowiedzZEdytowana
             }).then(function(){
                     ngDialog.open({
-                        template: '<div class="alert"><div>Utworzono użytkownika<div><button ng-click="close()">Zamknij</button></div>',
+                        template: '<div class="alert"><div>Dodanie odpowiedzi powiodło się<div><button ng-click="close()">Zamknij</button></div>',
                         className: 'ngdialog-theme-default',
                         controller: 'alertCtr',
                         plain: true
@@ -353,12 +377,97 @@ quizApp.controller("edytujOdpowiedzCtr",
             ).finally(function () {
             })
         }
+        $scope.anuluj = function () {
+            ngDialog.closeAll();
+            ngDialog.open({
+                template: 'answersList.html',
+                width: '40%',
+                className: 'ngdialog-theme-default',
+                controller: 'answersList'
+            });
+        }
 
+
+    });
+
+quizApp.controller("edytujOdpowiedzCtr",
+    function ($scope, $http, ngDialog, quizService,tokenService,CONST){
+        $scope.odpowiedz = quizService.getOdpowiedz();
+        $scope.odpowiedzPrzedEdycja = quizService.getOdpowiedz();
+        $scope.odpowiedzi = quizService.getOdpowiedzi();
+        $scope.zapiszZEdytowanaOdpowiedz = function (odpowiedzZEdytowana,odpowiedzi) {
+            if(odpowiedzZEdytowana.poprawna) {
+                for (var i=0; i<odpowiedzi.length; i++) {
+                    if(odpowiedzi[i].poprawna){
+
+                        if(odpowiedzi[i].id == odpowiedzZEdytowana.id)
+                            continue;
+                        var odpowiedzDoZmiany = odpowiedzi[i];
+                        odpowiedzDoZmiany.poprawna = false;
+                        $http({
+                            url : CONST.url+'/odpowiedzi/edytujOdpowiedz',
+                            method : 'POST',
+                            headers: {
+                                'Content-Type' : 'application/json',
+                                'Authorization': 'Basic '+ tokenService.getToken()
+                            },
+                            data : odpowiedzDoZmiany
+                        }).then(function(){
+                            },function errorCallback(response){
+                            }
+                        ).finally(function () {
+                        })
+                    }
+                }
+            }
+            var licznik = 0;
+            for (var i=0; i<odpowiedzi.length; i++) {
+                if(!odpowiedzi[i].poprawna){
+                    licznik++;
+                }
+            }
+            if(licznik == odpowiedzi.length){
+                alert("Przynajmniej jedna odpowiedz musi być prawidłowa");
+                return;
+            }
+            $http({
+                url : CONST.url+'/odpowiedzi/edytujOdpowiedz',
+                method : 'POST',
+                headers: {
+                    'Content-Type' : 'application/json',
+                    'Authorization': 'Basic '+ tokenService.getToken()
+                },
+                data : odpowiedzZEdytowana
+            }).then(function(){
+                    ngDialog.open({
+                        template: '<div class="alert"><div>Edycja odpowiedzi powiodła się<div><button ng-click="close()">Zamknij</button></div>',
+                        className: 'ngdialog-theme-default',
+                        controller: 'alertCtr',
+                        plain: true
+                    });
+                },function errorCallback(response){
+                    if(response.status == '405'){
+                        alert("Istnieje użytkownik o takim nicku");
+                    }
+                }
+            ).finally(function () {
+            })
+        }
+        $scope.anuluj = function () {
+            ngDialog.closeAll();
+            ngDialog.open({
+                template: 'answersList.html',
+                width: '40%',
+                className: 'ngdialog-theme-default',
+                controller: 'answersList'
+            });
+        }
 
     });
 quizApp.controller("answersList",
     function ($scope, $http, ngDialog, quizService,tokenService,CONST){
         $scope.pytanie = quizService.getPytanie();
+        $scope.odpowiedzi = [];
         $http({
             method: 'GET',
             url: CONST.url+'/odpowiedzi/pobierzPoPytaniu/'+quizService.getPytanie().id,
@@ -371,18 +480,27 @@ quizApp.controller("answersList",
             $scope.odpowiedzi = response.data;
         }).finally(function () {
         });
-        $scope.edytujOdpowiedz = function (odpowiedz) {
+        $scope.edytujOdpowiedz = function (odpowiedz,odpowiedzi) {
             quizService.setOdpowiedz(odpowiedz);
+            quizService.setOdpowiedzi(odpowiedzi);
             ngDialog.open({
                 template: 'edytujOdpowiedz.html',
                 className: 'ngdialog-theme-default',
                 controller: 'edytujOdpowiedzCtr'
             });
         }
+        $scope.dodajOdpowiedz = function (odpowiedzi) {
+            quizService.setOdpowiedzi(odpowiedzi);
+            ngDialog.open({
+                template: 'edytujOdpowiedz.html',
+                className: 'ngdialog-theme-default',
+                controller: 'dodajOdpowiedz'
+            });
+        }
         $scope.usunOdpowiedz = function (odpowiedz) {
             quizService.setOdpowiedz(odpowiedz);
             ngDialog.open({
-                template: '<div class="alert"><div>Czy napewno chcesz usunąć użytkownika?<div><button ng-click="closeAll()">Nie</button><button ng-click="usunTaOdpowiedz(odpowiedz)">Tak</button></div>',
+                template: '<div class="alert"><div>Czy napewno chcesz usunąć odpowiedź?<div><button ng-click="anuluj()">Nie</button><button ng-click="usunTaOdpowiedz(odpowiedz)">Tak</button></div>',
                 className: 'ngdialog-theme-default',
                 controller: 'usunOdpowiedzCrt',
                 plain: true
@@ -395,6 +513,10 @@ quizApp.controller("usunOdpowiedzCrt",
     function ($scope, $http, ngDialog, quizService,tokenService,CONST){
         $scope.odpowiedz = quizService.getOdpowiedz();
         $scope.usunTaOdpowiedz = function (odpowiedz) {
+            if(odpowiedz.poprawna){
+                alert("Przynajmniej jedna odpowiedź musi byc poprawna!");
+                return;
+            }
             $http({
                 url : CONST.url+'/odpowiedzi/usunPoId/'+odpowiedz.id,
                 method : 'PUT',
@@ -404,7 +526,7 @@ quizApp.controller("usunOdpowiedzCrt",
                 }
             }).then(function(){
                     ngDialog.open({
-                        template: '<div class="alert"><div>Utworzono użytkownika<div><button ng-click="close()">Zamknij</button></div>',
+                        template: '<div class="alert"><div>Usunięto odpowiedź<div><button ng-click="close()">Zamknij</button></div>',
                         className: 'ngdialog-theme-default',
                         controller: 'alertCtr',
                         plain: true
@@ -415,6 +537,15 @@ quizApp.controller("usunOdpowiedzCrt",
                     }
                 }
             ).finally(function () {
+            });
+        }
+        $scope.anuluj = function () {
+            ngDialog.closeAll();
+            ngDialog.open({
+                template: 'answersList.html',
+                width: '40%',
+                className: 'ngdialog-theme-default',
+                controller: 'answersList'
             });
         }
 
